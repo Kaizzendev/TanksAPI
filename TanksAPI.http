@@ -4,3 +4,26 @@ GET {{TanksAPI_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+GET {{TanksAPI_HostAddress}}/api/auth/users/
+Accept: application/json
+
+###
+
+GET {{TanksAPI_HostAddress}}/api/auth/users/1
+Accept: application/json
+
+###
+
+POST {{TanksAPI_HostAddress}}/api/auth/user
+Content-Type: application/json
+
+{
+    "id": "3",
+    "name": "Manus",
+    "password": "Abyss"
+}
+
+###
+
+DELETE {{TanksAPI_HostAddress}}/api/Auth/user/3
