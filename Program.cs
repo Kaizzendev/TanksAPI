@@ -3,17 +3,18 @@ using TanksAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
-builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<GameDbContext>(options =>
 {
     options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection"));
+        builder.Configuration.GetConnectionString("Default"));
 });
+
+// Add services to the container.
+builder.Services.AddControllers();
 
 var app = builder.Build();
 

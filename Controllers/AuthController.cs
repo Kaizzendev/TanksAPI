@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using TanksAPI.Data;
 using TanksAPI.Models;
 
 namespace TanksAPI.Controllers;
@@ -7,61 +9,55 @@ namespace TanksAPI.Controllers;
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
-    private static readonly List<User> Users =
-    [
-        new User
-        {
-            ID = "1",
-            name = "Geralt",
-            password = "Kaer"
-        },
-        new User 
-        {
-            ID = "2",
-            name = "Ciri",
-            password = "Pajarillo"
-        }
-    ];
 
-    [HttpGet("users")]
-    public ActionResult<List<User>> GetUsers()
+    private readonly GameDbContext _gameDbContext;
+
+    public AuthController(GameDbContext gameDbContext)
     {
-        return Ok(Users);
+        _gameDbContext = gameDbContext;
     }
 
-    [HttpGet("users/{id}")]
-    public ActionResult<User> GetUserById(string id)
+    [HttpGet("users")]
+    public async Task<ActionResult<List<User>>> GetUsers()
     {
-        var user = Users.FirstOrDefault(x => x.ID == id);
+        return Ok(await _gameDbContext.Users.ToListAsync());
+    }
+    
+    [HttpGet("users/{id}")]
+    public async Task<ActionResult<User>> GetUserById(Guid id)
+    {
+        var user = await _gameDbContext.Users.FindAsync(id);
         if (user == null)
         {
             return NotFound();
         }
         return Ok(user);
     }
-
+    
     [HttpPost("user")]
-    public ActionResult<User> addUser(User newUser)
+    public async Task<ActionResult<User>> addUser(User newUser)
     {
         if (newUser == null)
         {
             return BadRequest();
         } 
         
-        Users.Add(newUser);
-        return CreatedAtAction(nameof(GetUserById), new { id = newUser.ID }, newUser);
+        _gameDbContext.Users.Add(newUser);
+        await _gameDbContext.SaveChangesAsync();
+        return CreatedAtAction(nameof(GetUserById), new { id = newUser.Id }, newUser);
     }
-
+    
     [HttpDelete("user/{id}")]
-    public ActionResult DeleteUser(string id)
+    public async Task<IActionResult> DeleteUser(Guid id)
     {
-        var user = Users.FirstOrDefault(x => x.ID == id);
+        var user = await _gameDbContext.Users.FindAsync(id);
         if (user == null)
         {
             return NotFound();
         }
         
-        Users.Remove(user);
+        _gameDbContext.Users.Remove(user);
+        await _gameDbContext.SaveChangesAsync();
         return NoContent();
     }
 }

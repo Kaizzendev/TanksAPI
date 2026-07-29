@@ -19,11 +19,10 @@ POST {{TanksAPI_HostAddress}}/api/auth/user
 Content-Type: application/json
 
 {
-    "id": "3",
-    "name": "Manus",
-    "password": "Abyss"
+    "Username": "Manus",
+    "PasswordHash": "Abyss"
 }
 
 ###
 
-DELETE {{TanksAPI_HostAddress}}/api/Auth/user/3
+DELETE {{TanksAPI_HostAddress}}/api/Auth/user/019fad26-ffe6-7729-a91c-7c5294c11c74
