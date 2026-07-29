@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TanksAPI.Data;
+using TanksAPI.DTOs;
 using TanksAPI.Models;
 
 namespace TanksAPI.Controllers;
@@ -60,4 +61,43 @@ public class AuthController : ControllerBase
         await _gameDbContext.SaveChangesAsync();
         return NoContent();
     }
+    
+    
+    [HttpPost("register")]
+        public async Task<ActionResult> Register(RegisterRequest request)
+        {
+
+            bool exists = await _gameDbContext.Users.AnyAsync(u => u.Username == request.Username);
+            
+            if (exists)
+            {
+                return Conflict();
+            }
+
+            User user = new()
+            {
+                Username = request.Username,
+                PasswordHash = request.Password
+            };
+            
+            _gameDbContext.Users.Add(user);
+            await _gameDbContext.SaveChangesAsync();
+            return Created();
+        }
+        
+    [HttpPost("login")]
+    public async Task<ActionResult> Login(LoginRequest request)
+    {
+        User? user = await _gameDbContext.Users.FirstOrDefaultAsync(u =>
+            u.Username == request.Username);
+
+        if (user == null)
+            return Unauthorized();
+
+        if (user.PasswordHash != request.Password)
+            return Unauthorized();
+
+        return Ok();
+    }
+    
 }

@@ -26,3 +26,23 @@ Content-Type: application/json
 ###
 
 DELETE {{TanksAPI_HostAddress}}/api/Auth/user/019fad26-ffe6-7729-a91c-7c5294c11c74
+
+###
+
+POST {{TanksAPI_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "Username": "Pedro",
+  "Password": "Picapiedras"
+}
+
+###
+
+POST {{TanksAPI_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "Username": "Geralt",
+  "Password": "Kaer"
+}
