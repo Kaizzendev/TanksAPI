@@ -73,11 +73,13 @@ public class AuthController : ControllerBase
             {
                 return Conflict();
             }
+            
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
             User user = new()
             {
                 Username = request.Username,
-                PasswordHash = request.Password
+                PasswordHash = passwordHash
             };
             
             _gameDbContext.Users.Add(user);
@@ -94,8 +96,14 @@ public class AuthController : ControllerBase
         if (user == null)
             return Unauthorized();
 
-        if (user.PasswordHash != request.Password)
+        bool validPassword = BCrypt.Net.BCrypt.Verify(
+            request.Password,
+            user.PasswordHash);
+
+        if (!validPassword)
+        {
             return Unauthorized();
+        }
 
         return Ok();
     }
