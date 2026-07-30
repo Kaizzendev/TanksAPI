@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TanksAPI.Data;
 using TanksAPI.DTOs;
 using TanksAPI.Models;
+using TanksAPI.Services;
 
 namespace TanksAPI.Controllers;
 
@@ -10,14 +12,16 @@ namespace TanksAPI.Controllers;
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
-
+    private readonly JwtService _jwtService;
     private readonly GameDbContext _gameDbContext;
 
-    public AuthController(GameDbContext gameDbContext)
+    public AuthController(GameDbContext gameDbContext, JwtService jwtService)
     {
         _gameDbContext = gameDbContext;
+        _jwtService = jwtService;
     }
-
+    
+    [Authorize]
     [HttpGet("users")]
     public async Task<ActionResult<List<User>>> GetUsers()
     {
@@ -105,7 +109,9 @@ public class AuthController : ControllerBase
             return Unauthorized();
         }
 
-        return Ok();
+        string token = _jwtService.GenerateToken(user);
+
+        return Ok( new { token });
     }
     
 }

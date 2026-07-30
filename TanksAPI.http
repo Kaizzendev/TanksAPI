@@ -7,7 +7,7 @@ Accept: application/json
 
 GET {{TanksAPI_HostAddress}}/api/auth/users/
 Accept: application/json
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTlmYWU3ZC0yNThmLTdiMWMtYmU4MS04ODdmNmI1NjcxOTEiLCJ1bmlxdWVfbmFtZSI6IlNla2lybyIsImp0aSI6ImUwYThiOTY1LTUzMTYtNGVkNS04MzlkLWJlNTk0MTRmZTM2MyIsImV4cCI6MTc4NTQwNDk5NiwiaXNzIjoiVGFua3NBUEkiLCJhdWQiOiJUYW5rc1VuaXR5In0.iYRlYHYst9qW2ZuxU5iJQZxpI-1EKFR2LIF1IBRuWQs
 ###
 
 GET {{TanksAPI_HostAddress}}/api/auth/users/1
