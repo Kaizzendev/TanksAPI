@@ -24,12 +24,6 @@ public class SaveGameController: ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetSaveGame()
     {
-        
-        foreach (var claim in User.Claims)
-        {
-            Console.WriteLine($"{claim.Type} = {claim.Value}");
-        }
-        
         Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         SaveGame? saveGame = await _gameDbContext.SaveGames.FirstOrDefaultAsync(s => s.UserId == userId);
 
@@ -49,8 +43,22 @@ public class SaveGameController: ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateSaveGame()
+    public async Task<IActionResult> UpdateSaveGame(SaveGameRequest saveGameRequest)
     {
+        Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        SaveGame? saveGame = await _gameDbContext.SaveGames.FirstOrDefaultAsync(s => s.UserId == userId);
+
+        if (saveGame == null)
+        {
+            return NotFound();
+        }
+
+        saveGame.CurrentWave = saveGameRequest.CurrentWave;
+        saveGame.HighestWave = saveGameRequest.HighestWave;
+        saveGame.TotalKills = saveGameRequest.TotalKills;
+
+        await _gameDbContext.SaveChangesAsync();
+
         return NoContent();
     }
 }
