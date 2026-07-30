@@ -68,28 +68,34 @@ public class AuthController : ControllerBase
     
     
     [HttpPost("register")]
-        public async Task<ActionResult> Register(RegisterRequest request)
+    public async Task<ActionResult> Register(RegisterRequest request)
+    {
+
+        bool exists = await _gameDbContext.Users.AnyAsync(u => u.Username == request.Username);
+        
+        if (exists)
         {
-
-            bool exists = await _gameDbContext.Users.AnyAsync(u => u.Username == request.Username);
-            
-            if (exists)
-            {
-                return Conflict();
-            }
-            
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
-
-            User user = new()
-            {
-                Username = request.Username,
-                PasswordHash = passwordHash
-            };
-            
-            _gameDbContext.Users.Add(user);
-            await _gameDbContext.SaveChangesAsync();
-            return Created();
+            return Conflict();
         }
+        
+        string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+
+        User user = new()
+        {
+            Username = request.Username,
+            PasswordHash = passwordHash,
+            SaveGame = new SaveGame()
+            {
+                CurrentWave = 0,
+                HighestWave = 0,
+                TotalKills = 0
+            }
+        };
+        
+        _gameDbContext.Users.Add(user);
+        await _gameDbContext.SaveChangesAsync();
+        return Created();
+    }
         
     [HttpPost("login")]
     public async Task<ActionResult> Login(LoginRequest request)

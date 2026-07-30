@@ -7,7 +7,7 @@ Accept: application/json
 
 GET {{TanksAPI_HostAddress}}/api/auth/users/
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTlmYWU3ZC0yNThmLTdiMWMtYmU4MS04ODdmNmI1NjcxOTEiLCJ1bmlxdWVfbmFtZSI6IlNla2lybyIsImp0aSI6ImUwYThiOTY1LTUzMTYtNGVkNS04MzlkLWJlNTk0MTRmZTM2MyIsImV4cCI6MTc4NTQwNDk5NiwiaXNzIjoiVGFua3NBUEkiLCJhdWQiOiJUYW5rc1VuaXR5In0.iYRlYHYst9qW2ZuxU5iJQZxpI-1EKFR2LIF1IBRuWQs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTlmYjJiZS1iODE4LTc4MjEtYTc3Ni0zMGYyNWU4ZTA2ODYiLCJ1bmlxdWVfbmFtZSI6IlNla2lybyIsImp0aSI6IjcxMDFiNjRkLWYyY2ItNGM5YS1iMDBjLWFhNmJhMzJkYjA2MyIsImV4cCI6MTc4NTQxMzk5NCwiaXNzIjoiVGFua3NBUEkiLCJhdWQiOiJUYW5rc1VuaXR5In0.5CsVAN6VnOVKi8zs2kp6Wj67K_cQo5a9VDe31an-h30
 ###
 
 GET {{TanksAPI_HostAddress}}/api/auth/users/1
@@ -25,7 +25,7 @@ Content-Type: application/json
 
 ###
 
-DELETE {{TanksAPI_HostAddress}}/api/Auth/user/019fad26-ffe6-7729-a91c-7c5294c11c74
+DELETE {{TanksAPI_HostAddress}}/api/Auth/user/019fae7d-258f-7b1c-be81-887f6b567191
 
 ###
 
@@ -46,3 +46,9 @@ Content-Type: application/json
   "Username": "Sekiro",
   "Password": "Mono"
 }
+
+###
+
+GET {{TanksAPI_HostAddress}}/api/SaveGame
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTlmYjJiZS1iODE4LTc4MjEtYTc3Ni0zMGYyNWU4ZTA2ODYiLCJ1bmlxdWVfbmFtZSI6IlNla2lybyIsImp0aSI6ImFjODg3ZWFmLTZjNTktNDgwOC04MTJmLTBmYThmNjZlYjkxNSIsImV4cCI6MTc4NTQxNTAwMSwiaXNzIjoiVGFua3NBUEkiLCJhdWQiOiJUYW5rc1VuaXR5In0.yR22ayz3bjyZ_NFGOSsKBtuTyGbfFBbnWbBzVV_IdwQ
