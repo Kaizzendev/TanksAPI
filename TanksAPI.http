@@ -52,3 +52,8 @@ Content-Type: application/json
 GET {{TanksAPI_HostAddress}}/api/SaveGame
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTlmYjJiZS1iODE4LTc4MjEtYTc3Ni0zMGYyNWU4ZTA2ODYiLCJ1bmlxdWVfbmFtZSI6IlNla2lybyIsImp0aSI6ImFjODg3ZWFmLTZjNTktNDgwOC04MTJmLTBmYThmNjZlYjkxNSIsImV4cCI6MTc4NTQxNTAwMSwiaXNzIjoiVGFua3NBUEkiLCJhdWQiOiJUYW5rc1VuaXR5In0.yR22ayz3bjyZ_NFGOSsKBtuTyGbfFBbnWbBzVV_IdwQ
+
+###
+
+GET {{TanksAPI_HostAddress}}/api/Leaderboard
+Content-Type: application/json

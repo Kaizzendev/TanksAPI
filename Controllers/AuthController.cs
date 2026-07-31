@@ -21,7 +21,6 @@ public class AuthController : ControllerBase
         _jwtService = jwtService;
     }
     
-    [Authorize]
     [HttpGet("users")]
     public async Task<ActionResult<List<User>>> GetUsers()
     {
