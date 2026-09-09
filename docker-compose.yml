@@ -1,10 +1,10 @@
 services:
   postgres:
     image: postgres:17
-    env_file:
-        - .env
     container_name: tanks-db
     restart: unless-stopped
+    env_file:
+        - .env
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -13,6 +13,23 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+  
+  api:
+    build: .
+    container_name: tanks-api
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    environment:
+      ConnectionStrings__Default: Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      Jwt__Key: ${JWT_KEY}
+      Jwt__Issuer: ${JWT_ISSUER}
+      Jwt__Audience: ${JWT_AUDIENCE}
+      Jwt__ExpireMinutes: ${JWT_EXPIRE_MINUTES}
+    ports:
+      - "5024:5000"
 
 volumes:
   postgres_data:
